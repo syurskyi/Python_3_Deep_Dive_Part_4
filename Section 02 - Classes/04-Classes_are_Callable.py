@@ -6,7 +6,6 @@
 # %%
 '''
 As we saw earlier, one of the things Python does for us when we create a class is to make it callable.
-
 Calling a class creates a new instance of the class - an object of that particular type.
 '''
 
@@ -21,10 +20,10 @@ class Program:
 p = Program()
 
 # %%
-type(p)
+print(type(p))
 
 # %%
-isinstance(p, Program)
+print(isinstance(p, Program))
 
 # %%
 '''
@@ -32,18 +31,19 @@ These instances have their own namespace, and their own `__dict__` that is disti
 '''
 
 # %%
-p.__dict__
+print(p.__dict__)
 
 # %%
-Program.__dict__
+print(Program.__dict__)
 
 # %%
 '''
-Instances also have attributes that may not be visible in their `__dict__` (they are being stored elsewhere, as we'll examine later):
+Instances also have attributes that may not be visible in their `__dict__` (they are being stored elsewhere,
+ as we'll examine later):
 '''
 
 # %%
-p.__class__
+print(p.__class__)
 
 # %%
 '''
@@ -51,7 +51,7 @@ Although we can use `__class__` we can also use `type`:
 '''
 
 # %%
-type(p) is p.__class__
+print(type(p) is p.__class__)
 
 # %%
 '''
@@ -71,7 +71,7 @@ class MyClass:
 m = MyClass()
 
 # %%
-type(m), m.__class__
+print(type(m), m.__class__)
 
 # %%
 '''
@@ -86,7 +86,7 @@ class MyClass:
 m = MyClass()
 
 # %%
-type(m), m.__class__
+print(type(m), m.__class__)
 
 # %%
 '''
