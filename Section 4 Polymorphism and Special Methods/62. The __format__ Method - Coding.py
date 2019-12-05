@@ -46,9 +46,7 @@ format(now, '%a %Y-%m-%d  %I:%M %p')
 # %%
 '''
 We can implement support for format specifiers in our own classes by implementing the `__format__` method.
-
 This is actually quite complicated to do, so we usually delegate back to some other type's formatting.
-
 Just like with `__str__` and `__repr__`, `__format__` should return a string.
 '''
 
