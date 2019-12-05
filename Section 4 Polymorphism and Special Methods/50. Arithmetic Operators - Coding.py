@@ -10,7 +10,9 @@ Let's first look at some simple example of using the straightforward `__add__`, 
 
 # %%
 '''
-Let's say we want to implement a `Vector` class that supports various arithmetic operations. We won't assume a specific number of dimensions - that will be determined by how many arguments are passed to the `__init__` method. We will however require the arguments to be Real numbers.
+Let's say we want to implement a `Vector` class that supports various arithmetic operations. We won't assume a specific 
+number of dimensions - that will be determined by how many arguments are passed to the `__init__` method. 
+We will however require the arguments to be Real numbers.
 
 '''
 
@@ -42,7 +44,9 @@ class Vector:
 
 # %%
 '''
-Now, let's support addition and subtraction of vectors - they'll need to be of the same dimension, othwerwise we should raise a `TypeError` exception (consistent with the exception Python raises if you try to add a string and an int for example).
+Now, let's support addition and subtraction of vectors - they'll need to be of the same dimension, othwerwise we should
+raise a `TypeError` exception (consistent with the exception Python raises if you try to add a string and an int for 
+example).
 '''
 
 # %%
@@ -119,8 +123,8 @@ except TypeError as ex:
 
 # %%
 '''
-Now, let's add support for multiplication by a scalar value - e.g. multipliying a vector by a real num ber (not another vector).
-
+Now, let's add support for multiplication by a scalar value - e.g. multipliying a vector by a real num ber
+(not another vector).
 To do that we'll implement the `__mul__` method:
 '''
 
@@ -191,8 +195,10 @@ except TypeError as ex:
 
 # %%
 '''
-What happened here is that Python first tried calling the addition operation on the `int` object, using the `Vector` as the second operand. Integers of course do no support this type, so Python tried using our `Vector` class - but not the `__mul__` since that is called when the `Vector` is the **left** operand. Instead, it is looking for (and does not find) a method to use when the `Vector` is the **right** operand.
-
+What happened here is that Python first tried calling the addition operation on the `int` object, using the `Vector` 
+as the second operand. Integers of course do no support this type, so Python tried using our `Vector` class - but not 
+the `__mul__` since that is called when the `Vector` is the **left** operand. Instead, it is looking for 
+(and does not find) a method to use when the `Vector` is the **right** operand.
 We can implement this method, using `__rmul__`:
 '''
 
@@ -261,12 +267,12 @@ v1 * 10
 # %%
 '''
 Now, let's say we want to implement the dot product of two vectors.
-
 If you are rusty on this, just do a quick read of this: https://en.wikipedia.org/wiki/Dot_product
-
-Basically we need vectors of equal dimension, and we calculate the sum of the product of components (pairwise) in each vector.
-
-We can implement it by differentiating between a `Real` and ` Vector` type in our `__mul__` method - of course we won't need it in the `__rmul__` method because if we implement multiplication between two `Vectors` we'll always have a `Vector` as the left operand, so `__mul__` will get called first.
+Basically we need vectors of equal dimension, and we calculate the sum of the product of components (pairwise) in each 
+vector.
+We can implement it by differentiating between a `Real` and ` Vector` type in our `__mul__` method - of course we won't
+need it in the `__rmul__` method because if we implement multiplication between two `Vectors` we'll always have a 
+`Vector` as the left operand, so `__mul__` will get called first.
 '''
 
 # %%
@@ -336,8 +342,8 @@ v1 * v2
 # %%
 '''
 We could also implement the **cross** product of two vectors (which would return another vector).
-
-The calculations get a little more complicated, so I won't show you those details, but let's see how we could use the `@` operator to implement this:
+The calculations get a little more complicated, so I won't show you those details, but let's see how we could use the 
+`@` operator to implement this:
 '''
 
 # %%
@@ -417,7 +423,8 @@ v1 @ v2
 
 # %%
 '''
-We also have the in-place operators. Typically in-place operators will try to **mutate** the object on the left of the expression:
+We also have the in-place operators. Typically in-place operators will try to **mutate** the object on the left of 
+the expression:
 '''
 
 # %%
@@ -447,7 +454,6 @@ print(id(l), l)
 # %%
 '''
 As you can see, here we ended up with a **new** list object.
-
 But in-place does **not** *guarantee* a mutation. For example, tuples are immutable objects:
 '''
 
@@ -459,12 +465,14 @@ print(id(t), t)
 
 # %%
 '''
-As you can see we ended up with a new tuple. Same thing happens with strings, integers, floats and so on, that are also immutable types. 
+As you can see we ended up with a new tuple. Same thing happens with strings, integers, floats and so on, that are also 
+immutable types. 
 '''
 
 # %%
 '''
-Let's go back to our `Vector` class and implement in-place addition - but we'll implement it in such a way that we do not mutate the Vector, instead just returning a new Vector - similar to what we just saw with tuples:
+Let's go back to our `Vector` class and implement in-place addition - but we'll implement it in such a way that we do 
+not mutate the Vector, instead just returning a new Vector - similar to what we just saw with tuples:
 '''
 
 # %%
@@ -541,7 +549,6 @@ print(id(v1), v1)
 # %%
 '''
 As you can see, we end up with a new `Vector` object.
-
 Now let's modify this so we actually mutate the `Vector` object:
 '''
 
@@ -628,7 +635,8 @@ As you can see we **mutated** the object `v1`.
 
 # %%
 '''
-Let's also implement the unary minus on our `Vector` class. In this case we just want to return a new `Vector` with each component negated:
+Let's also implement the unary minus on our `Vector` class. In this case we just want to return a new `Vector` with 
+each component negated:
 '''
 
 # %%
