@@ -117,9 +117,8 @@ Whereas the `repr()` method will use the `__repr__` method directly.
 # %%
 '''
 What happens if we define a `__str__` method, but not `__repr__` method.
-
-We'll look at inheritance later, but for now think of it as Python providing "defaults" for those methods when they are not present.
-
+We'll look at inheritance later, but for now think of it as Python providing "defaults" for those methods when 
+they are not present.
 Let's first see how it works if we do not have either of those methods for two different classes:
 '''
 
@@ -139,8 +138,8 @@ repr(person), repr(point)
 
 # %%
 '''
-As we can see, Python provides a default representation for objects that contains the class name, and the instance memory address.
-
+As we can see, Python provides a default representation for objects that contains the class name, and the instance 
+memory address.
 If we use `str()` instead, we get the same result:
 '''
 
@@ -161,7 +160,6 @@ class Person:
     def __str__(self):
         print('__str__ called')
         return self.name
-
 # %%
 p = Person('Python', 30)
 
@@ -189,7 +187,8 @@ str(p)
 
 # %%
 '''
-Lastly, various formatting functions will also prefer using the `__str__` method when available. Lert's first go back to our `Person` class that implements both:
+Lastly, various formatting functions will also prefer using the `__str__` method when available. Lert's first go back
+ to our `Person` class that implements both:
 '''
 
 # %%
