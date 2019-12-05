@@ -5,7 +5,10 @@
 
 # %%
 '''
-The `__del__` method as we discussed in the lecture is called right before the object is about to be garbage collected. This is sometimes called the **finalizer**. It is sometimes referred to as the **destructor**, but that's not really accurate since that method does not destroy the object - that's the GC's responsibility - `__del__` just gets called prior to the GC destroying the object.
+The `__del__` method as we discussed in the lecture is called right before the object is about to be garbage collected. 
+This is sometimes called the **finalizer**. It is sometimes referred to as the **destructor**, but that's not really 
+accurate since that method does not destroy the object - that's the GC's responsibility - `__del__` just gets called 
+prior to the GC destroying the object.
 '''
 
 # %%
@@ -15,9 +18,12 @@ Although this method can be useful in some circumstances we need to be aware of 
 
 # %%
 '''
-1. Using the `del` keyword does not call `__del__` directly - it just removes the symbol for wehatever namespace it is being deleted from and reduces the reference count by 1.
-2. The `__del__` method is not called until the object is about to be destroyed - so using `del obj` decreases the ref count by 1, but if something else is referencing that object then `__del__` is **not** called.
-3. Unhandled exceptions that occur in the `__del__` method are essentially ignored, and the exceptions are written to `sys.stderr`.
+1. Using the `del` keyword does not call `__del__` directly - it just removes the symbol for wehatever namespace it is 
+being deleted from and reduces the reference count by 1.
+2. The `__del__` method is not called until the object is about to be destroyed - so using `del obj` decreases the ref 
+count by 1, but if something else is referencing that object then `__del__` is **not** called.
+3. Unhandled exceptions that occur in the `__del__` method are essentially ignored, and the exceptions are written to 
+`sys.stderr`.
 '''
 
 # %%
@@ -27,7 +33,8 @@ It's actually pretty easy to have unwitting references to an object.
 
 # %%
 '''
-Let's first write a small helper function to calculate the reference count for an object using it's memory address (which only works correctly if the object actually exists):
+Let's first write a small helper function to calculate the reference count for an object using it's memory address 
+(which only works correctly if the object actually exists):
 '''
 
 # %%
@@ -62,7 +69,8 @@ p = Person('Alex')
 
 # %%
 '''
-We can now remove that reference from the symbol `p` to the instance either by using `del p` or even just setting `p` to `None`:
+We can now remove that reference from the symbol `p` to the instance either by using `del p` or even just setting `p` 
+to `None`:
 '''
 
 # %%
@@ -84,7 +92,6 @@ del p
 # %%
 '''
 Now let's see how we might create an unwitting extra reference to the object.
-
 Let's implement a method that is going to create an exception:
 '''
 
@@ -155,7 +162,8 @@ for key, value in error.__traceback__.tb_frame.f_locals.copy().items():
 
 # %%
 '''
-As you can see the traceback contains a refererence to our object in it's dictionary - so we have a second reference to our object.
+As you can see the traceback contains a refererence to our object in it's dictionary - so we have a second reference to 
+our object.
 '''
 
 # %%
@@ -168,7 +176,8 @@ ref_count(p_id)
 
 # %%
 '''
-Now, even if we remove our reference to the object, we will still have something handing on to it, and the `__del__` method will not get called:
+Now, even if we remove our reference to the object, we will still have something handing on to it, and the `__del__` 
+method will not get called:
 '''
 
 # %%
@@ -189,22 +198,29 @@ del error
 
 # %%
 '''
-And now, as you can see, we finally had the `__del__` method called. (Note that depending on what you were doing in your notebook, you may not even see this call at all - which just means that something else is holding on to our object somewhere!)
+And now, as you can see, we finally had the `__del__` method called. (Note that depending on what you were doing in your 
+notebook, you may not even see this call at all - which just means that something else is holding on to our object 
+somewhere!)
 '''
 
 # %%
 '''
-For this reason it is rare for devs to use the `__del__` method for critical things like closing a file, or closing committing a transaction in a database, etc - instead use a context manager, and avoid using the `__del__` method.
+For this reason it is rare for devs to use the `__del__` method for critical things like closing a file, or closing 
+committing a transaction in a database, etc - instead use a context manager, and avoid using the `__del__` method.
 '''
 
 # %%
 '''
-Because you do not know when the `__del__` method is going to get called (unless you know exactly how your code might be creating references to the object), you could also get into a situation where other objects (like global objects) referenced in the `__del__` method will even still be around by the time `__del__` is called (it would get called when the module is destroyed, such as at program shutdown).
+Because you do not know when the `__del__` method is going to get called (unless you know exactly how your code might 
+be creating references to the object), you could also get into a situation where other objects (like global objects) 
+referenced in the `__del__` method will even still be around by the time `__del__` is called (it would get called when 
+the module is destroyed, such as at program shutdown).
 '''
 
 # %%
 '''
-The last point to make about `__del__` is that any unhandled exceptions in the `__del__` method are essentially ignored by Python (although their output is sent to `sys.stderr`).
+The last point to make about `__del__` is that any unhandled exceptions in the `__del__` method are essentially ignored 
+by Python (although their output is sent to `sys.stderr`).
 '''
 
 # %%
@@ -265,7 +281,6 @@ with ErrToFile('err.txt'):
 # %%
 '''
 As you can see, no exception was generated and our code continues to run happily along.
-
 But let's examine the contents of that file:
 '''
 
@@ -280,7 +295,8 @@ So, as you can see the exception was silenced and the exception data was just se
 
 # %%
 '''
-What this means is that you cannot trap exceptions that occur in the `__del__` method (from outside the `__del__` method to be exact):
+What this means is that you cannot trap exceptions that occur in the `__del__` method (from outside the `__del__` 
+method to be exact):
 '''
 
 # %%
@@ -296,11 +312,13 @@ else:
 
 # %%
 '''
-Now all this does not mean you should just altogether avoid using the `__del__` method - you just need to be aware of its limitations, and be extra careful in your code with circular references or unintentional extra references to your objects.
-Things get even dicier when using multi-threading, but that's beyond the scope of this course!
+Now all this does not mean you should just altogether avoid using the `__del__` method - you just need to be aware of 
+its limitations, and be extra careful in your code with circular references or unintentional extra references to your 
+objects. Things get even dicier when using multi-threading, but that's beyond the scope of this course!
 '''
 
 # %%
 '''
-Personally I never use `__del__`. Instead I use context managers to manage releasing resources such as files, sockets, database connections, etc.
+Personally I never use `__del__`. Instead I use context managers to manage releasing resources such as files, sockets,
+ database connections, etc.
 '''
