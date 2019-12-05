@@ -51,7 +51,8 @@ def my_func(a, b, c):
 
 # %%
 '''
-We can call this function with three arguments, but we could also create a partial function that essentially pre-sets some of the positional arguments:
+We can call this function with three arguments, but we could also create a partial function that essentially pre-sets 
+some of the positional arguments:
 '''
 
 # %%
@@ -59,7 +60,8 @@ partial_func = partial(my_func, 10, 20)
 
 # %%
 '''
-And now we can (indirectly) call `my_func` using `partial_func` using only an argument for `c`, with `a` and `b` pre-set to `10` and `20` respectively:
+And now we can (indirectly) call `my_func` using `partial_func` using only an argument for `c`, with `a` and `b` 
+pre-set to `10` and `20` respectively:
 '''
 
 # %%
@@ -67,7 +69,9 @@ partial_func(30)
 
 # %%
 '''
-So I referred to `partial` as a function, but in reality it's just a callable (and this is why in Python we generally refer to things as callables, not just functions, because an object might be callable without being an actual function). In fact, we've seen this before with properties - these are callables, but they are not functions!
+So I referred to `partial` as a function, but in reality it's just a callable (and this is why in Python we generally 
+refer to things as callables, not just functions, because an object might be callable without being an actual function). 
+In fact, we've seen this before with properties - these are callables, but they are not functions!
 '''
 
 # %%
@@ -81,7 +85,6 @@ type(partial)
 # %%
 '''
 So the type is `type` which means `partial` is actually a class, not a function.
-
 We can easily re-create a simplified approximation of `partial` ourselves using the `__call__` method in a custom class.
 '''
 
@@ -124,7 +127,8 @@ callable(partial_func)
 
 # %%
 '''
-As you can see our `Partial` class **instance** is callable, but the `Person` class instances will not be (the class itself is callable of course):
+As you can see our `Partial` class **instance** is callable, but the `Person` class instances will not be (the class 
+itself is callable of course):
 '''
 
 # %%
@@ -148,13 +152,13 @@ callable(p)
 
 # %%
 '''
-Let's take a look at another example. I want to implement a dictionary to act as a cache, but I also want to keep track of the cache misses so I can later evaluate if my caching strategy is effective or not.
+Let's take a look at another example. I want to implement a dictionary to act as a cache, but I also want to keep track 
+of the cache misses so I can later evaluate if my caching strategy is effective or not.
 '''
 
 # %%
 '''
 The `defaultdict` class can be useful as a cache.
-
 Recall that I can specify a default callable to use when requesting a non-existent key from a `defaultdict`:
 '''
 
@@ -176,7 +180,8 @@ d.items()
 
 # %%
 '''
-Now, I want to use this `default_value` callable to keep track of the number of times it has been called - this will tell me how may times a non-existent key was requested from my `defaultdict`.
+Now, I want to use this `default_value` callable to keep track of the number of times it has been called - this will 
+tell me how may times a non-existent key was requested from my `defaultdict`.
 '''
 
 # %%
@@ -212,7 +217,9 @@ miss_counter
 
 # %%
 '''
-This works, but is not very good - the `default_value` function **relies** on us having a global `miss_counter` variable - if we don't have it our function won't work. Additionally we cannot use it to keep track of different cache instances since they would all use the same instance of `miss_counter`.
+This works, but is not very good - the `default_value` function **relies** on us having a global `miss_counter` 
+variable - if we don't have it our function won't work. Additionally we cannot use it to keep track of different 
+cache instances since they would all use the same instance of `miss_counter`.
 '''
 
 # %%
@@ -239,7 +246,8 @@ def default_value(counter):
 
 # %%
 '''
-But this **won't work**, because counter is now local to the function so the local `counter` will be incremented, not the `counter` from the outside scope.
+But this **won't work**, because counter is now local to the function so the local `counter` will be incremented, not 
+the `counter` from the outside scope.
 '''
 
 # %%
@@ -275,7 +283,6 @@ default_value_1.counter
 # %%
 '''
 So this works as a counter, but `default_value_1` is not callable, which is what we need to the `defaultdict`.
-
 So let's make it callable, and implement the behavior we need:
 '''
 
@@ -367,10 +374,9 @@ cache_def_2.counter
 # %%
 '''
 So the `__call__` method can essentially be used to make **instances** of our classes callable.
-
 This is also very useful to create **decorator** classes.
-
-Often we just use closures to create decorators, but sometimes it is easier to use a class instead, or if we want our class to provide functionality beyond just being used as a decorator.
+Oftn we just use closures to create decorators, but sometimes it is easier to use a class instead, or if we want our 
+class to provide functionality beyond just being used as a decorator.
 '''
 
 # %%
@@ -385,19 +391,23 @@ Let's look at an example.
 
 # %%
 '''
-For simplicity I will assume here that we only want to decorate functions defined at the module level. For creating a decorator that also works for methods (bound functions) we have to do a bit more work and will need to understand descriptors - more on descriptors later.
+For simplicity I will assume here that we only want to decorate functions defined at the module level. For creating a 
+decorator that also works for methods (bound functions) we have to do a bit more work and will need to understand 
+descriptors - more on descriptors later.
 '''
 
 # %%
 '''
-So we want to easily be able to keep track of how many times our functions are called and how long they take to run on average.
+So we want to easily be able to keep track of how many times our functions are called and how long they take to run on 
+average.
 '''
 
 # %%
 '''
-Although we could cretainly implement code directly inside our function to do this, it becomes repetitive if we need to do it for multiple functions - so a decorator is ideal for that.
-
-Let's look at how we can use a decorator class to keep track of how many times our function is called and also keep track of the time it takes to run on average.
+Although we could cretainly implement code directly inside our function to do this, it becomes repetitive if we need 
+to do it for multiple functions - so a decorator is ideal for that.
+Let's look at how we can use a decorator class to keep track of how many times our function is called and also keep 
+track of the time it takes to run on average.
 '''
 
 # %%
@@ -435,7 +445,9 @@ def profiler(fn):
 
 # %%
 '''
-So, we added `counter` and `avg_time` as attributes to the `inner` function (the decorated function) - that works but looks a little weird - also notice that we calculate `avg_time` every time we call our decorated fuinction, even though the user may never request it - seems wasteful.
+So, we added `counter` and `avg_time` as attributes to the `inner` function (the decorated function) - that works but 
+looks a little weird - also notice that we calculate `avg_time` every time we call our decorated fuinction, even 
+though the user may never request it - seems wasteful.
 '''
 
 # %%
@@ -456,7 +468,9 @@ func1.counter
 
 # %%
 '''
-Hmm, that's weird - `counter` still shows zero. This is because we have to understand what we did in the decorator - we made `inner.counter` the value of `counter` **at the time the decorator function was called** - this is **not** the counter value that we keep updating!!
+Hmm, that's weird - `counter` still shows zero. This is because we have to understand what we did in the decorator - 
+we made `inner.counter` the value of `counter` **at the time the decorator function was called** - this is **not** 
+the counter value that we keep updating!!
 '''
 
 # %%
@@ -584,8 +598,9 @@ func_2.counter, func_2.avg_time
 
 # %%
 '''
-As you can see, it was much easier to implement this more complex decorator using a class and the `__call__` method than using a purely function approach. But of course, if the decorator is simple enough to implement using a functional approach, that's my preferred way of doing things! 
-
+As you can see, it was much easier to implement this more complex decorator using a class and the `__call__` method 
+than using a purely function approach. But of course, if the decorator is simple enough to implement using a functional 
+approach, that's my preferred way of doing things! 
 Just because I have a hammer does not mean everything is a nail!!
 '''
 
