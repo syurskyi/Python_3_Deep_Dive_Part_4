@@ -13,7 +13,8 @@ dir(object)
 
 # %%
 '''
-This means that by default our custom classes produce hashable objects that can be used in mapping types such as dictionaries and sets.
+This means that by default our custom classes produce hashable objects that can be used in mapping types such as 
+dictionaries and sets.
 '''
 
 # %%
@@ -32,7 +33,8 @@ p1 == p2
 
 # %%
 '''
-By default `__hash__` uses the object's identity, and `__eq__` will only evaluate to `True` if the two objects are the same objects (identity).
+By default `__hash__` uses the object's identity, and `__eq__` will only evaluate to `True` if the two objects are 
+the same objects (identity).
 '''
 
 # %%
@@ -75,8 +77,8 @@ except TypeError as ex:
 
 # %%
 '''
-This is because two objects that compare equal should also have the same hash. However, Python's default is to use the object's identity. So if that were the case then `p1` and `p2` would be equal, but would not have the same hash.
-
+This is because two objects that compare equal should also have the same hash. However, Python's default is to use 
+the object's identity. So if that were the case then `p1` and `p2` would be equal, but would not have the same hash.
 So Python sets the `__hash__` property to `None`:
 '''
 
@@ -112,10 +114,10 @@ class Person:
 
 # %%
 '''
-We now have a `Person` class that supports equality based on the state of the class (the `name` in this instance) and is hashable too.
-
-We should also keep in mind that for this to work well in data structurfes such as dictionaries, what we use to create a hash of the class should remain immutable.
-
+We now have a `Person` class that supports equality based on the state of the class (the `name` in this instance)
+and is hashable too.
+We should also keep in mind that for this to work well in data structurfes such as dictionaries, what we use to create 
+a hash of the class should remain immutable.
 So, a better approach would be to make the `name` property a read-only property:
 '''
 
@@ -153,5 +155,7 @@ s = {p1}
 
 # %%
 '''
-And of course since we now have equality defined in terms of the object state (and not the default of, essentially, the memory address), we can recover an element from a dictionary using different objects (identity wise) that have the same state (equality wise).
+And of course since we now have equality defined in terms of the object state (and not the default of, essentially, 
+the memory address), we can recover an element from a dictionary using different objects (identity wise) that have 
+the same state (equality wise).
 '''
