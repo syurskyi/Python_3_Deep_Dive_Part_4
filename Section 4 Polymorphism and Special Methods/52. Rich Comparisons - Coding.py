@@ -6,9 +6,8 @@
 # %%
 '''
 This is quite staightforward. We can choose to implement any number of these rich comparison operators in our classes.
-
-Furthermore, if one comparison does not exist, Python will try to the reverse the operands and the operator (and unlike the arithmetic operators, both operands can be of the same type).
-
+Furthermore, if one comparison does not exist, Python will try to the reverse the operands and the operator 
+(and unlike the arithmetic operators, both operands can be of the same type).
 Let's use a 2D `Vector` class to check this out:
 '''
 
@@ -31,8 +30,8 @@ v1 == v2
 
 # %%
 '''
-By default, Python will use `is` when we do not provide an implementation for `==`. In this case we have two different objects, so they do not compare `==`.
-
+By default, Python will use `is` when we do not provide an implementation for `==`. In this case we have two different 
+objects, so they do not compare `==`.
 Let's change that:
 '''
 
@@ -63,7 +62,8 @@ v1 == v3
 
 # %%
 '''
-We could even support an equality comparison with  other iterable types. Let's say we want to support equality comparisons with tuples:
+We could even support an equality comparison with  other iterable types. Let's say we want to support equality 
+comparisons with tuples:
 '''
 
 # %%
@@ -90,7 +90,8 @@ v1 == (10, 11)
 
 # %%
 '''
-In fact, although tuples do not implement equality against a `Vector`, it will still work because Python will reflect the operation:
+In fact, although tuples do not implement equality against a `Vector`, it will still work because Python will reflect 
+the operation:
 '''
 
 # %%
@@ -99,14 +100,12 @@ In fact, although tuples do not implement equality against a `Vector`, it will s
 # %%
 '''
 We can also implement the other rich comparison operators in the same way.
-
 Let's implement the `<` operator:
 '''
 
 # %%
 '''
 We'll consider a Vector to be less than another vector if it's length (Euclidean) is less than the other.
-
 We're actually going to make use of the `abs` function for this, so we'll define the `__abs__` method as well.
 '''
 
@@ -155,10 +154,9 @@ v2 > v1
 
 # %%
 '''
-What happened is that since `__gt__` was not implemented, Python decided to reflect the operation, so instead of actually running this comparison:
-
+What happened is that since `__gt__` was not implemented, Python decided to reflect the operation, so instead of 
+actually running this comparison:
 ```v2 > v1```
-
 Python actually ran:
 
 ```v1 < v2```
@@ -182,7 +180,8 @@ And the reverse?
 
 # %%
 '''
-That worked too. How about `<=`, since we have `,` and `==` defined, will Python be able to use both to come up with a result?
+That worked too. How about `<=`, since we have `,` and `==` defined, will Python be able to use both to come up with a 
+result?
 '''
 
 # %%
@@ -255,11 +254,8 @@ v1 >= v2
 # %%
 '''
 Again, Python was able to reverse the operation:
-
 ```v1 >= v2```
-
 and run:
-
 ```v2 <= v1```
 '''
 
@@ -275,11 +271,9 @@ v1 != v2
 '''
 How did that work?
 Well Python could not find a `__ne__` method, so it delegated to `__eq__` instead:
-
 ```
 not(v1 == v2)
 ```
-
 We can easily see this by adding a print statement to our `__eq__` method:
 '''
 
@@ -324,8 +318,8 @@ v1 != v2
 
 # %%
 '''
-In many cases, we can derive most of the rich comparisons from just two base ones: the `__eq__` and one other one, maybe `__lt__`, or `__le__`, etc.
-
+In many cases, we can derive most of the rich comparisons from just two base ones: the `__eq__` and one other one, 
+maybe `__lt__`, or `__le__`, etc.
 For example, if `==` and `<` is defined, then:
 - `a <= b` is `a == b or a < b`
 - `a > b` is `b < a`
@@ -341,7 +335,8 @@ On the other hand if we define `==` and `<=`, then:
 
 # %%
 '''
-So, instead of us defining all the various methods, we can use the `@total_ordering` decorator in the `functools` module, that will work with `__eq__` and **one** other rich comparison method, filling in all the gaps for us:
+So, instead of us defining all the various methods, we can use the `@total_ordering` decorator in the `functools` 
+module, that will work with `__eq__` and **one** other rich comparison method, filling in all the gaps for us:
 '''
 
 # %%
@@ -377,7 +372,8 @@ a <= b
 
 # %%
 '''
-You'll notice that `__eq__` was not called - that's because `a < b` was True, and short-circuit evaluation. In this next example though, you'll see both methods are called:
+You'll notice that `__eq__` was not called - that's because `a < b` was True, and short-circuit evaluation. 
+In this next example though, you'll see both methods are called:
 '''
 
 # %%
@@ -385,7 +381,9 @@ a <= c
 
 # %%
 '''
-One thing I want to point out, according to the documentation the `__eq__` is not actually **required**. That's because as we saw earlier, all objects have a **default** implementation for `==` based on the memory address. That's usually not what we want, so we normally end up defining a custom `__eq__` implementation as well.
+One thing I want to point out, according to the documentation the `__eq__` is not actually **required**. 
+That's because as we saw earlier, all objects have a **default** implementation for `==` based on the memory address. 
+That's usually not what we want, so we normally end up defining a custom `__eq__` implementation as well.
 '''
 
 # %%
