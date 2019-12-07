@@ -42,7 +42,7 @@ p1.x = 10.1
 p2.x = 20.2
 
 # %%
-p1.x, p2.x
+print(p1.x, p2.x)
 
 # %%
 '''
@@ -50,7 +50,7 @@ As you can see, we now have a descriptor that uses the instances themselves to s
 '''
 
 # %%
-p1.__dict__, p2.__dict__
+print(p1.__dict__, p2.__dict__)
 
 # %%
 '''
@@ -70,7 +70,7 @@ p = Point2D()
 p.x = 10.1
 
 # %%
-p.__dict__
+print(p.__dict__)
 
 # %%
 '''
@@ -81,7 +81,7 @@ And what happens if we set `y`? What symbol is the descriptor going to use to st
 p.y = 20.2
 
 # %%
-p.__dict__
+print(p.__dict__)
 
 # %%
 '''
@@ -89,7 +89,7 @@ Yep, the **same** symbol!
 '''
 
 # %%
-p.x, p.y
+print(p.x, p.y)
 
 # %%
 '''
