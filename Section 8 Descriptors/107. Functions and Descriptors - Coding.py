@@ -5,7 +5,8 @@
 
 # %%
 '''
-As I mentioned in the lecture video, Python functions actually implement the non-data descriptor protocol, i.e. they implement the `__get__` method
+As I mentioned in the lecture video, Python functions actually implement the non-data descriptor protocol, i.e. 
+they implement the `__get__` method
 '''
 
 # %%
@@ -22,7 +23,8 @@ So what does that `__get__` actually return?
 
 # %%
 '''
-We know the arguments for `__get__` are `self, instance, owner_class`, so let's try to call the `__get__` method with `instance` set to `None` and `owner_class` set to our main module:
+We know the arguments for `__get__` are `self, instance, owner_class`, so let's try to call the `__get__` method with 
+`instance` set to `None` and `owner_class` set to our main module:
 '''
 
 # %%
@@ -42,7 +44,8 @@ add, id(add)
 
 # %%
 '''
-As you can see, when `instance` is `None`, the `__get__` method just returns the function itself, with owner set to `__main__` in this case.
+As you can see, when `instance` is `None`, the `__get__` method just returns the function itself, with owner set 
+to `__main__` in this case.
 '''
 
 # %%
@@ -73,7 +76,9 @@ As you can see the owner class is now `__main__.Person`, and we get a plain func
 
 # %%
 '''
-What essentially happened is that when we retrieved the attribute `say_hello` from the `Person` class, since functions are descriptors, Python called the `__get__` method, in this case with `instance` set to `None`, and the owner class set to the `Person` class.
+What essentially happened is that when we retrieved the attribute `say_hello` from the `Person` class, 
+since functions are descriptors, Python called the `__get__` method, in this case with `instance` set to `None`, 
+and the owner class set to the `Person` class.
 '''
 
 # %%
@@ -92,8 +97,8 @@ p.say_hello
 
 # %%
 '''
-Again, since `say_hello` is actually a descriptor, Python invoked the `__get__` method, this time with an instance (`p`) and with owner class set to `Person`.
-
+Again, since `say_hello` is actually a descriptor, Python invoked the `__get__` method, this time with an instance 
+(`p`) and with owner class set to `Person`.
 The descriptor then returns a method object, which it binds to the instance.
 '''
 
@@ -116,12 +121,14 @@ bound_method()
 
 # %%
 '''
-So the question is, since `p.say_hello`, a non-data descriptor, does not return a function, but a `method` object, where is the *actual* function stored?
+So the question is, since `p.say_hello`, a non-data descriptor, does not return a function, but a `method` object, 
+where is the *actual* function stored?
 '''
 
 # %%
 '''
-Turns out methods have a special attribute, `__func__` that is is used to keep a reference to the original function that can then be called when needed:
+Turns out methods have a special attribute, `__func__` that is is used to keep a reference to the original function 
+that can then be called when needed:
 '''
 
 # %%
@@ -129,7 +136,8 @@ p.say_hello.__func__, id(p.say_hello.__func__)
 
 # %%
 '''
-As you can see, `__func__` is a reference to the `say_hello` function object defined in the `Person` class, and to make sure we can do this:
+As you can see, `__func__` is a reference to the `say_hello` function object defined in the `Person` class, 
+and to make sure we can do this:
 '''
 
 # %%
@@ -137,7 +145,9 @@ p.say_hello.__func__ is Person.say_hello
 
 # %%
 '''
-We could try to mimic this behavior ourselves by writing our own descriptor. The problem is that we need to define a function using Python functions, so this is a bit circular, but we can try to somewhat mimic instance methods to gain a better understanding of how they work.
+We could try to mimic this behavior ourselves by writing our own descriptor. The problem is that we need 
+to define a function using Python functions, so this is a bit circular, but we can try to somewhat mimic 
+instance methods to gain a better understanding of how they work.
 '''
 
 # %%
@@ -156,7 +166,6 @@ class Person:
 # %%
 '''
 We want to write a descriptor to replace `say_hello`.
-
 First we're going to write a plain function, directly in our main module:
 '''
 
@@ -229,8 +238,8 @@ m()
 # %%
 '''
 Ok, so now we can start planning how we are going to implement our descriptor.
-
-When the `__get__` method is called from the class, we will want to return the plain `say_hello` function. But when `__get__` is called from an instance we'll want to return a method object bound to the specific instance.
+When the `__get__` method is called from the class, we will want to return the plain `say_hello` function. 
+But when `__get__` is called from an instance we'll want to return a method object bound to the specific instance.
 '''
 
 # %%
@@ -250,7 +259,8 @@ class MyFunc:
 
 # %%
 '''
-I made a slight tweak here to allow us to specify any function we want in the init - this make this descriptor a little more generic.
+I made a slight tweak here to allow us to specify any function we want in the init - this make this descriptor 
+a little more generic.
 '''
 
 # %%
@@ -279,7 +289,6 @@ Person.say_hello
 # %%
 '''
 We get the original function back.
-
 And when we access it from an instance of `Person`:
 '''
 
