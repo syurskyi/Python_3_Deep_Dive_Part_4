@@ -5,12 +5,17 @@
 
 # %%
 '''
-Suppose we have a `Polygon` class that has a vertices property that needs to be defined as a sequence of `Point2D` instances. So here, not only do we want the `vertices` attribute of our `Polygon` to be an iterable of some kind, we also want the elements to all be instances of the `Point2D` class. In turn we'll also want to make sure that coordinates for `Point2D` are non-negative integer values (as might be expected in computer screen coordinates):
+Suppose we have a `Polygon` class that has a vertices property that needs to be defined as a sequence 
+of `Point2D` instances. So here, not only do we want the `vertices` attribute of our `Polygon` to be an iterable 
+of some kind, we also want the elements to all be instances of the `Point2D` class. In turn we'll also want 
+to make sure that coordinates for `Point2D` are non-negative integer values (as might be expected in computer screen 
+coordinates):
 '''
 
 # %%
 '''
-Let's start by defining the `Point2D` class, but we'll need a descriptor for the coordinates to ensure they are integer values, possibly bounded between min and max values:
+Let's start by defining the `Point2D` class, but we'll need a descriptor for the coordinates to ensure they are integer 
+values, possibly bounded between min and max values:
 '''
 
 # %%
@@ -82,7 +87,8 @@ except ValueError as ex:
 
 # %%
 '''
-Next let's create a validator that checks that we have a sequence (mutable or immutable, does not matter) of `Point2D` objects. 
+Next let's create a validator that checks that we have a sequence (mutable or immutable, does not matter) of `Point2D` 
+objects. 
 '''
 
 # %%
@@ -180,7 +186,8 @@ p.vertices
 
 # %%
 '''
-OK, so, for completeness, let's write a method that we can use to append new points to the vertices list (that's why we made it a mutable sequence type!)
+OK, so, for completeness, let's write a method that we can use to append new points to the vertices list 
+(that's why we made it a mutable sequence type!)
 '''
 
 # %%
@@ -325,7 +332,8 @@ except ValueError as ex:
 
 # %%
 '''
-We could actually improve this even more by making our `Polygon` class an actual sequence type. To do that we only need to implement a few special methods:
+We could actually improve this even more by making our `Polygon` class an actual sequence type. To do that we only 
+need to implement a few special methods:
 '''
 
 # %%
@@ -427,7 +435,8 @@ Why `False`? The point (0,0) is in the vertices list...
 
 # %%
 '''
-Well, we didn't override the `__eq__` method in our `Point2D` class, so it's using the implementation in `object`, which uses object identity.
+Well, we didn't override the `__eq__` method in our `Point2D` class, so it's using the implementation in `object`, 
+which uses object identity.
 
 We can easily fix that:
 '''
