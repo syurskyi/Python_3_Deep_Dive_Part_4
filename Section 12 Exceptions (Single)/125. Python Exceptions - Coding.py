@@ -136,7 +136,8 @@ except Exception as ex:
 # %%
 '''
 But be careful of writing broad handlers like that - it is unlikely (but not always) that you can write handlers that 
-do any meaningful error handling for such broad exceptions - the better approach is to handle specific exceptions in specific ways.
+do any meaningful error handling for such broad exceptions - the better approach is to handle specific exceptions in 
+specific ways.
 '''
 
 # %%
