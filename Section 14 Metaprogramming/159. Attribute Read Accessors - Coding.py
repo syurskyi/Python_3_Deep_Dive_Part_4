@@ -54,7 +54,7 @@ class Person:
 
 # %%
 p = Person()
-p.name
+print(p.name)
 
 # %%
 '''
@@ -87,7 +87,7 @@ class Person:
 p = Person()
 
 # %%
-p.age
+print(p.age)
 
 # %%
 '''
@@ -143,7 +143,7 @@ class Person:
 p = Person(100)
 
 # %%
-p.age
+print(p.age)
 
 # %%
 '''
@@ -176,10 +176,10 @@ class DefaultClass:
 d = DefaultClass('NotAvailable')
 
 # %%
-d.test
+print(d.test)
 
 # %%
-d.__dict__
+print(d.__dict__)
 
 # %%
 '''
@@ -187,7 +187,7 @@ And of course, the next time we request it, the `__getattr__` is no longer calle
 '''
 
 # %%
-d.test
+print(d.test)
 
 # %%
 '''
@@ -198,10 +198,10 @@ Which means we can set it to a different value and not have `__getattr__` stomp 
 d.test = 'hello'
 
 # %%
-d.test
+print(d.test)
 
 # %%
-d.__dict__
+print(d.__dict__)
 
 # %%
 '''
@@ -218,10 +218,10 @@ class Person(DefaultClass):
 p = Person('Raymond')
 
 # %%
-p.name
+print(p.name)
 
 # %%
-p.age
+print(p.age)
 
 # %%
 '''
@@ -252,7 +252,7 @@ class Person(AttributeNotFoundLogger):
 p = Person('Raymond')
 
 # %%
-p.name
+print(p.name)
 
 # %%
 try:
@@ -303,7 +303,7 @@ the instance dictionary (assuming the attribute was stored there):
 '''
 
 # %%
-p.__dict__['_name']
+print(p.__dict__['_name'])
 
 # %%
 '''
@@ -330,7 +330,7 @@ class Person:
 p = Person('Eric', 78)
 
 # %%
-p.__dict__
+print(p.__dict__)
 
 # %%
 '''
@@ -411,7 +411,7 @@ class Person:
 p = Person('Python', 42)
 
 # %%
-p.name
+print(p.name)
 
 # %%
 '''
